@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="AnnotationTool.Views.Canvas.AnnotationCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="{Binding FrameBitmapSource}"></ImageBrush>
+        </Grid.Background>
+        
+        <Canvas></Canvas>
+    </Grid>
+</UserControl>
