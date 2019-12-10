@@ -24,6 +24,10 @@
                 Height="50"
                 Margin="10">Stop</Button>
             <Slider 
+                Value="{Binding FramesSliderValue}"
+                Maximum="{Binding FramesSliderMaximum}"
+                TickFrequency="1"
+                ToolTip="{Binding Path=Value,RelativeSource={RelativeSource Self}}"
                 VerticalAlignment="Center"
                 Orientation="Horizontal" 
                 Width="500"></Slider>

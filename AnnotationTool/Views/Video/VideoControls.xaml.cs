@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace AnnotationTool.Views.Video
 {
@@ -11,5 +13,6 @@ namespace AnnotationTool.Views.Video
         {
             InitializeComponent();
         }
+
     }
 }

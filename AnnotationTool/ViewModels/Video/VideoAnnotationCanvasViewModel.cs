@@ -14,6 +14,12 @@ namespace AnnotationTool.ViewModels.Video
     public class LoadFrameEvent : PubSubEvent<AnnotatedFrame>
     {
     }
+    public class CurrentFrameNumberEvent : PubSubEvent<int>
+    {
+    }
+    public class TotalFrameNumberEvent : PubSubEvent<int>
+    {
+    }
 
     public class VideoAnnotationCanvasViewModel : BindableBase
     {
@@ -40,6 +46,8 @@ namespace AnnotationTool.ViewModels.Video
             if (_video.State == VideoStates.Stopped)
             {
                 _video.Open();
+                int totalFrameCount = _video.GetTotalFrameNumber();
+                _eventAggregator.GetEvent<TotalFrameNumberEvent>().Publish(totalFrameCount);
             }
             _video.State = VideoStates.Running;
 
@@ -48,13 +56,22 @@ namespace AnnotationTool.ViewModels.Video
                 //setup
                 AnnotatedFrame frame = new AnnotatedFrame();
                 int interval = 1000 / _video.GetFPS();
+                int currentFramePos = _video.GetCurrentFrameNumber();
 
                 //retrieve frames, and publish to the canvas
                 while (frame != null && interval > 0 && _video.State == VideoStates.Running)
                 {
+                    //read frame
                     frame = _video.GetAnnotatedFrame(0);
+                    //increment position
+                    currentFramePos++;
+
                     if (frame != null)
+                    {
                         _eventAggregator.GetEvent<LoadFrameEvent>().Publish(frame);
+                        _eventAggregator.GetEvent<CurrentFrameNumberEvent>().Publish(currentFramePos);
+
+                    }
                     Thread.Sleep(interval);
                 }
 
@@ -80,6 +97,7 @@ namespace AnnotationTool.ViewModels.Video
             _video.State = VideoStates.Stopped;
             _video.Close();
             _eventAggregator.GetEvent<LoadFrameEvent>().Publish(new AnnotatedFrame());
+            _eventAggregator.GetEvent<CurrentFrameNumberEvent>().Publish(0);
 
         }
 
@@ -91,6 +109,8 @@ namespace AnnotationTool.ViewModels.Video
         {
             _video = new AnnotatedVideo(path);
             _video.Open();
+            int totalFrameCount = _video.GetTotalFrameNumber();
+            _eventAggregator.GetEvent<TotalFrameNumberEvent>().Publish(totalFrameCount);
             var frame = _video.GetAnnotatedFrame(0);
             _video.Close();
 

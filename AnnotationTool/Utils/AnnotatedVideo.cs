@@ -33,6 +33,23 @@ namespace AnnotationTool.Utils
             }
             return -1;
         }
+
+        public int GetCurrentFrameNumber()
+        {
+            if (videoCapture.IsOpened)
+            {
+                return (int)videoCapture.GetCaptureProperty(CapProp.PosFrames);
+            }
+            return -1;
+        }
+        public int GetTotalFrameNumber()
+        {
+            if (videoCapture.IsOpened)
+            {
+                return (int)videoCapture.GetCaptureProperty(CapProp.FrameCount);
+            }
+            return -1;
+        }
         public AnnotatedFrame GetAnnotatedFrame(int index)
         {
             if (videoCapture.IsOpened)
