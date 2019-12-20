@@ -1,4 +1,5 @@
-﻿using AnnotationTool.ViewModels.Video;
+﻿using System;
+using AnnotationTool.ViewModels.Video;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 
@@ -20,6 +21,10 @@ namespace AnnotationTool.Utils
             Path = path;
         }
 
+        private bool IsOpenAndValid()
+        {
+            return videoCapture.Ptr != IntPtr.Zero && videoCapture.IsOpened;
+        }
         public void Open()
         {
             videoCapture = new VideoCapture(Path);
@@ -27,7 +32,7 @@ namespace AnnotationTool.Utils
 
         public int GetFPS()
         {
-            if (videoCapture.IsOpened)
+            if (IsOpenAndValid())
             {
                 return (int)videoCapture.GetCaptureProperty(CapProp.Fps);
             }
@@ -36,7 +41,7 @@ namespace AnnotationTool.Utils
 
         public int GetCurrentFrameNumber()
         {
-            if (videoCapture.IsOpened)
+            if (IsOpenAndValid())
             {
                 return (int)videoCapture.GetCaptureProperty(CapProp.PosFrames);
             }
@@ -44,15 +49,16 @@ namespace AnnotationTool.Utils
         }
         public int GetTotalFrameNumber()
         {
-            if (videoCapture.IsOpened)
+            if (IsOpenAndValid())
             {
                 return (int)videoCapture.GetCaptureProperty(CapProp.FrameCount);
             }
             return -1;
         }
-        public AnnotatedFrame GetAnnotatedFrame(int index)
+
+        public AnnotatedFrame GetAnnotatedFrame()
         {
-            if (videoCapture.IsOpened)
+            if (IsOpenAndValid())
             {
                 Mat frame = videoCapture.QueryFrame();
                 if (frame != null && !frame.IsEmpty)
@@ -64,6 +70,20 @@ namespace AnnotationTool.Utils
 
             return null;
         }
+        public bool SetPosFrames(int index)
+        {
+            if (IsOpenAndValid() && videoCapture.GetCaptureProperty(CapProp.FrameCount) > index)
+            {
+                //move to relevant pos
+                videoCapture.SetCaptureProperty(CapProp.PosFrames, index);
+
+                return true;
+            }
+
+            return false;
+
+        }
+
 
         public void Close()
         {

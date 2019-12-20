@@ -4,6 +4,12 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ContentControl Grid.Column="0" prism:RegionManager.RegionName="ControlsRegion"></ContentControl>
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="WorkspaceRegion"></ContentControl>
     </Grid>
 </UserControl>

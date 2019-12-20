@@ -12,6 +12,20 @@ namespace AnnotationTool.Utils
             var s = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "../../Resources/nothing.jpeg");
             Frame = CvInvoke.Imread(s);
         }
+        public AnnotatedFrame(string path)
+        {
+            if (File.Exists(path))
+            {
+                var s = Path.Combine(path);
+                Frame = CvInvoke.Imread(s);
+            }
+            else
+            {
+                var s = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "../../Resources/nothing.jpeg");
+                Frame = CvInvoke.Imread(s);
+            }
+
+        }
         public AnnotatedFrame(Mat frame)
         {
 

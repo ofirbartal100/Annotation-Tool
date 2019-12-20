@@ -25,7 +25,7 @@ namespace AnnotationTool.ViewModels
         {
             Dictionary<string, string> navigation= new Dictionary<string, string>();
             navigation["ContentRegion"] = "SourceSelection";
-            regionManager.InitializeNavigations(navigation);
+            regionManager.Navigate(navigation);
         }
 
     }

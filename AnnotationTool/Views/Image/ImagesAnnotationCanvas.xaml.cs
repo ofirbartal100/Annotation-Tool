@@ -5,9 +5,9 @@ namespace AnnotationTool.Views.Image
     /// <summary>
     /// Interaction logic for ImageAnnotationCanvas
     /// </summary>
-    public partial class ImageAnnotationCanvas : UserControl
+    public partial class ImagesAnnotationCanvas : UserControl
     {
-        public ImageAnnotationCanvas()
+        public ImagesAnnotationCanvas()
         {
             InitializeComponent();
         }

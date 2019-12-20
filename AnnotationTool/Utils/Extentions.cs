@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,6 +21,21 @@ namespace AnnotationTool.Utils
         private static int _stackcount;
 
         /// <summary>
+        /// Navigates the given regions into the desired views
+        /// </summary>
+        /// <param name="regionManager">the region manager</param>
+        /// <param name="regionViewDictionary">dictionary containing region names as keys and view names as values</param>
+        public static void Navigate(this IRegionManager regionManager,
+            Dictionary<string, string> regionViewDictionary)
+        {
+            InitializeNavigations(regionManager, regionViewDictionary);
+            foreach (KeyValuePair<string, string> keyValuePair in regionViewDictionary)
+            {
+                regionManager.RequestNavigate(keyValuePair.Key, new Uri(keyValuePair.Value, UriKind.Relative));
+            }
+        }
+
+        /// <summary>
         /// Navigates the given regions into the desired views, waiting for region to be initialized
         /// </summary>
         /// <param name="regionManager">the region manager</param>
@@ -30,7 +47,6 @@ namespace AnnotationTool.Utils
             _stackcount = regionViewDictionary.Count;
             regionManager.Regions.CollectionChanged += _callback;
         }
-
         //create the callback and remove from the subscription
         private static NotifyCollectionChangedEventHandler GenerateCallbackWithScopeToThis(IRegionManager regionManager, Dictionary<string, string> regionViewDictionary)
         {
@@ -55,7 +71,7 @@ namespace AnnotationTool.Utils
     public static class EmguExtentions
     {
         /// <summary>
-        /// Converts a <see cref="System.Drawing.Image"/> into a WPF <see cref="BitmapSource"/>.
+        /// Converts AnnotationTools <see cref="System.Drawing.Image"/> into AnnotationTools WPF <see cref="BitmapSource"/>.
         /// </summary>
         /// <param name="source">The source image.</param>
         /// <returns>A BitmapSource</returns>
@@ -72,7 +88,7 @@ namespace AnnotationTool.Utils
         }
 
         /// <summary>
-        /// Converts a <see cref="System.Drawing.Bitmap"/> into a WPF <see cref="BitmapSource"/>.
+        /// Converts AnnotationTools <see cref="System.Drawing.Bitmap"/> into AnnotationTools WPF <see cref="BitmapSource"/>.
         /// </summary>
         /// <remarks>Uses GDI to do the conversion. Hence the call to the marshalled DeleteObject.
         /// </remarks>
@@ -80,38 +96,55 @@ namespace AnnotationTool.Utils
         /// <returns>A BitmapSource</returns>
         public static BitmapSource ToBitmapSource(this System.Drawing.Bitmap source)
         {
-            BitmapSource bitSrc = null;
-
-            var hBitmap = source.GetHbitmap();
-
             try
             {
-                bitSrc = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                    hBitmap,
-                    IntPtr.Zero,
-                    Int32Rect.Empty,
-                    BitmapSizeOptions.FromEmptyOptions());
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    source.Save(ms,ImageFormat.Bmp);
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.StreamSource = ms;
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
+                    return image;
+                }
             }
-            catch (Win32Exception)
+            catch (Exception e)
             {
-                bitSrc = null;
+                return null;
             }
-            finally
-            {
-                NativeMethods.DeleteObject(hBitmap);
-            }
+            //BitmapSource bitSrc = null;
 
-            return bitSrc;
+            //var hBitmap = source.GetHbitmap();
+
+            //try
+            //{
+            //    bitSrc = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+            //        hBitmap,
+            //        IntPtr.Zero,
+            //        Int32Rect.Empty,
+            //        BitmapSizeOptions.FromEmptyOptions());
+            //}
+            //catch (Win32Exception)
+            //{
+            //    bitSrc = null;
+            //}
+            //finally
+            //{
+            //    NativeMethods.DeleteObject(hBitmap);
+            //}
+
+            //return bitSrc;
         }
 
-        /// <summary>
-        /// FxCop requires all Marshalled functions to be in a class called NativeMethods.
-        /// </summary>
-        internal static class NativeMethods
-        {
-            [DllImport("gdi32.dll")]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool DeleteObject(IntPtr hObject);
-        }
+        ///// <summary>
+        ///// FxCop requires all Marshalled functions to be in AnnotationTools class called NativeMethods.
+        ///// </summary>
+        //internal static class NativeMethods
+        //{
+        //    [DllImport("gdi32.dll")]
+        //    [return: MarshalAs(UnmanagedType.Bool)]
+        //    internal static extern bool DeleteObject(IntPtr hObject);
+        //}
     }
 }

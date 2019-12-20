@@ -15,9 +15,9 @@ namespace AnnotationTool.ViewModels.Video
         public VideoAnnotationStudioViewModel(IRegionManager regionManager)
         {
             Dictionary<string, string> navigation = new Dictionary<string, string>();
-            navigation["ControlsRegion"] = "VideoAnnotationControls";
-            navigation["WorkspaceRegion"] = "VideoAnnotationCanvas";
-            regionManager.InitializeNavigations(navigation);
+            navigation["ControlsRegion"] = "Video"+"AnnotationControls";
+            navigation["WorkspaceRegion"] = "Video"+"AnnotationCanvas";
+            regionManager.Navigate(navigation);
         }
 
     }

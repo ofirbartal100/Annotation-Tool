@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="AnnotationTool.Views.Image.ImagesAnnotationControls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid  Background="Crimson">
+        <StackPanel Margin="20">
+
+            <Label FontSize="20">Images Annotation Controls</Label>
+
+            <!--Select Video-->
+            <DockPanel FlowDirection="RightToLeft">
+                <Button Command="{Binding SelectImagesButtonClickCommand}">Browse</Button>
+                <DockPanel FlowDirection="LeftToRight">
+                    <Label>Select Images</Label>
+                    <TextBox Text="{Binding SelectedImagesTextBoxText}"></TextBox>
+                </DockPanel>
+            </DockPanel>
+
+            <Button Command="{Binding LoadImagesToCanvasButtonClickCommand}">Load To Canvas</Button>
+
+            <!--Select Annotation Tool-->
+            <GroupBox Header="Annotation tool">
+                <ItemsControl ItemsSource="{Binding AnnotationTools}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid></UniformGrid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Checked="ToggleButton_OnChecked" GroupName="AnnotationTool" 
+                                         Content="{Binding ToolName}"></RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

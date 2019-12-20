@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using AnnotationTool.ViewModels.Video;
 
 namespace AnnotationTool.Views.Video
 {
@@ -14,5 +16,14 @@ namespace AnnotationTool.Views.Video
             InitializeComponent();
         }
 
+        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((VideoControlsViewModel)DataContext).SliderMouseDownCommand.Execute(null);
+        }
+        private void OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ((VideoControlsViewModel)DataContext).SliderMouseUpCommand.Execute(null);
+
+        }
     }
 }

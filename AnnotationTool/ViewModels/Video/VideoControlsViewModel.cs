@@ -10,6 +10,8 @@ using Prism.Events;
 namespace AnnotationTool.ViewModels.Video
 {
     public class VideoControlEvent : PubSubEvent<string> { }
+    public class SliderMouseUpEvent : PubSubEvent<int> { }
+    public class SliderMouseDownEvent : PubSubEvent { }
     public class VideoControlsViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
@@ -32,12 +34,16 @@ namespace AnnotationTool.ViewModels.Video
 
 
         public ICommand VideoControlClickCommand { get; set; }
+        public ICommand SliderMouseDownCommand { get; set; }
+        public ICommand SliderMouseUpCommand { get; set; }
         public VideoControlsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<CurrentFrameNumberEvent>().Subscribe(CurrentFrameNumberEventHandler);
             _eventAggregator.GetEvent<TotalFrameNumberEvent>().Subscribe(TotalFrameNumberEventHandler);
             VideoControlClickCommand = new DelegateCommand<string>(VideoControlClickCommandImplementation);
+            SliderMouseDownCommand = new DelegateCommand(SliderMouseDownCommandImplementation);
+            SliderMouseUpCommand = new DelegateCommand(SliderMouseUpCommandImplementation);
         }
 
         private void CurrentFrameNumberEventHandler(int frameNum)
@@ -53,6 +59,13 @@ namespace AnnotationTool.ViewModels.Video
         private void VideoControlClickCommandImplementation(string command)
         {
             _eventAggregator.GetEvent<VideoControlEvent>().Publish(command);
+        }
+
+        private void SliderMouseDownCommandImplementation() { }
+
+        private void SliderMouseUpCommandImplementation()
+        {
+            _eventAggregator.GetEvent<SliderMouseUpEvent>().Publish(FramesSliderValue);
         }
     }
 }
