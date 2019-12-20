@@ -1,12 +1,7 @@
-﻿using Prism.Commands;
+﻿using AnnotationTool.Utils;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using AnnotationTool.Utils;
-using AnnotationTool.Views;
 using Prism.Regions;
+using System.Collections.Generic;
 
 namespace AnnotationTool.ViewModels.Video
 {
@@ -15,10 +10,9 @@ namespace AnnotationTool.ViewModels.Video
         public VideoAnnotationStudioViewModel(IRegionManager regionManager)
         {
             Dictionary<string, string> navigation = new Dictionary<string, string>();
-            navigation["ControlsRegion"] = "Video"+"AnnotationControls";
-            navigation["WorkspaceRegion"] = "Video"+"AnnotationCanvas";
+            navigation["ControlsRegion"] = "Video" + "AnnotationControls";
+            navigation["WorkspaceRegion"] = "Video" + "AnnotationCanvas";
             regionManager.Navigate(navigation);
         }
-
     }
 }

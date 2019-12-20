@@ -1,7 +1,6 @@
-﻿using System;
-using AnnotationTool.ViewModels.Video;
-using Emgu.CV;
+﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using System;
 
 namespace AnnotationTool.Utils
 {
@@ -11,11 +10,13 @@ namespace AnnotationTool.Utils
         Paused,
         Stopped
     }
+
     internal class AnnotatedVideo
     {
         public string Path { get; set; }
         public VideoStates State { get; set; } = VideoStates.Stopped;
         private VideoCapture videoCapture;
+
         public AnnotatedVideo(string path)
         {
             Path = path;
@@ -25,6 +26,7 @@ namespace AnnotationTool.Utils
         {
             return videoCapture.Ptr != IntPtr.Zero && videoCapture.IsOpened;
         }
+
         public void Open()
         {
             videoCapture = new VideoCapture(Path);
@@ -47,6 +49,7 @@ namespace AnnotationTool.Utils
             }
             return -1;
         }
+
         public int GetTotalFrameNumber()
         {
             if (IsOpenAndValid())
@@ -70,6 +73,7 @@ namespace AnnotationTool.Utils
 
             return null;
         }
+
         public bool SetPosFrames(int index)
         {
             if (IsOpenAndValid() && videoCapture.GetCaptureProperty(CapProp.FrameCount) > index)
@@ -81,9 +85,7 @@ namespace AnnotationTool.Utils
             }
 
             return false;
-
         }
-
 
         public void Close()
         {

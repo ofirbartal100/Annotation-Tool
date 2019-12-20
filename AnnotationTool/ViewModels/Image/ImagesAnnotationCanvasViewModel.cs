@@ -1,18 +1,16 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using AnnotationTool.Utils;
+﻿using AnnotationTool.Utils;
 using AnnotationTool.ViewModels.Video;
 using Prism.Events;
+using Prism.Mvvm;
 using Prism.Regions;
+using System.Collections.Generic;
 
 namespace AnnotationTool.ViewModels.Image
 {
     public class ImagesAnnotationCanvasViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
+
         public ImagesAnnotationCanvasViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             Dictionary<string, string> navigation = new Dictionary<string, string>();
@@ -22,7 +20,6 @@ namespace AnnotationTool.ViewModels.Image
 
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<LoadImagesEvent>().Subscribe(LoadImagesEventHandler);
-
         }
 
         private void LoadImagesEventHandler(string path)

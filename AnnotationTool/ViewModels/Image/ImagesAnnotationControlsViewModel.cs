@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using AnnotationTool.Utils;
-using AnnotationTool.ViewModels.Video;
-using Microsoft.Win32;
+﻿using AnnotationTool.Utils;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using Microsoft.WindowsAPICodePack.Dialogs;
-
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AnnotationTool.ViewModels.Image
 {
     public class LoadImagesEvent : PubSubEvent<string> { }
+
     public class ImagesAnnotationControlsViewModel : BindableBase
     {
         #region Properties
+
         private ObservableCollection<IAnnotationTool> _annotationTools;
 
         public ObservableCollection<IAnnotationTool> AnnotationTools
@@ -34,17 +30,19 @@ namespace AnnotationTool.ViewModels.Image
         {
             get { return _selectedVideoTextBoxText; }
             set { SetProperty(ref _selectedVideoTextBoxText, value); }
-        } 
-        #endregion
+        }
+
+        #endregion Properties
 
         private IEventAggregator _eventAggregator;
 
         public ICommand SelectImagesButtonClickCommand { get; set; }
         public ICommand LoadImagesToCanvasButtonClickCommand { get; set; }
+
         public ImagesAnnotationControlsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            
+
             AnnotationTools = new ObservableCollection<IAnnotationTool>();
             AnnotationTools.Add(new BoundingBoxTool());
             AnnotationTools.Add(new LandmarksTool());
@@ -54,6 +52,7 @@ namespace AnnotationTool.ViewModels.Image
         }
 
         #region Commands
+
         private void SelectImagesButtonClickCommandImplementation()
         {
             //OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -68,7 +67,7 @@ namespace AnnotationTool.ViewModels.Image
             dialog.Filters.Add(new CommonFileDialogFilter("Image files", "*.png;*.jpg;*jpeg;*.bmp"));
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                SelectedImagesTextBoxText =  dialog.FileName;
+                SelectedImagesTextBoxText = dialog.FileName;
             }
         }
 
@@ -82,8 +81,8 @@ namespace AnnotationTool.ViewModels.Image
             var radioButton = sender as RadioButton;
             var annotationTool = radioButton.DataContext as IAnnotationTool;
             _eventAggregator.GetEvent<AnnotationToolSelectedEvent>().Publish(annotationTool.ToolName);
-        } 
-        #endregion
-    }
+        }
 
+        #endregion Commands
+    }
 }

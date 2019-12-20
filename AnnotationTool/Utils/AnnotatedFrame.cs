@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Emgu.CV;
+﻿using Emgu.CV;
+using System.IO;
 
 namespace AnnotationTool.Utils
 {
@@ -12,6 +12,7 @@ namespace AnnotationTool.Utils
             var s = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "../../Resources/nothing.jpeg");
             Frame = CvInvoke.Imread(s);
         }
+
         public AnnotatedFrame(string path)
         {
             if (File.Exists(path))
@@ -24,11 +25,10 @@ namespace AnnotationTool.Utils
                 var s = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "../../Resources/nothing.jpeg");
                 Frame = CvInvoke.Imread(s);
             }
-
         }
+
         public AnnotatedFrame(Mat frame)
         {
-
             Frame = frame;
         }
 

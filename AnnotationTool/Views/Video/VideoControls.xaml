@@ -1,29 +1,29 @@
 ﻿<UserControl x:Class="AnnotationTool.Views.Video.VideoControls"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="Aquamarine">
         <StackPanel Orientation="Horizontal">
-            <Button 
+            <Button
                 Command="{Binding VideoControlClickCommand}"
                 CommandParameter="Play"
                 Width="50"
                 Height="50"
                 Margin="10">Play</Button>
-            <Button 
+            <Button
                 Command="{Binding VideoControlClickCommand}"
                 CommandParameter="Pause"
                 Width="50"
                 Height="50"
                 Margin="10">Pause</Button>
-            <Button 
+            <Button
                 Command="{Binding VideoControlClickCommand}"
                 CommandParameter="Stop"
                 Width="50"
                 Height="50"
                 Margin="10">Stop</Button>
-            <Slider 
+            <Slider
                 PreviewMouseDown="OnPreviewMouseDown"
                 PreviewMouseUp="OnPreviewMouseUp"
                 Value="{Binding FramesSliderValue}"
@@ -31,7 +31,7 @@
                 TickFrequency="1"
                 ToolTip="{Binding Path=Value,RelativeSource={RelativeSource Self}}"
                 VerticalAlignment="Center"
-                Orientation="Horizontal" 
+                Orientation="Horizontal"
                 Width="500">
             </Slider>
         </StackPanel>

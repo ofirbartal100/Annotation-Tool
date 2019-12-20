@@ -6,7 +6,6 @@ namespace AnnotationTool.ViewModels.Image
     {
         public ImagesControlsViewModel()
         {
-
         }
     }
 }

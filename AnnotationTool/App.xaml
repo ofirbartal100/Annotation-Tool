@@ -4,6 +4,5 @@
 	     xmlns:prism="http://prismlibrary.com/"
              xmlns:local="clr-namespace:AnnotationTool">
     <Application.Resources>
-         
     </Application.Resources>
 </prism:PrismApplication>

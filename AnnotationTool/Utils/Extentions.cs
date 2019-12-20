@@ -1,17 +1,10 @@
-﻿using System;
+﻿using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
-using Prism.Regions;
 
 namespace AnnotationTool.Utils
 {
@@ -47,6 +40,7 @@ namespace AnnotationTool.Utils
             _stackcount = regionViewDictionary.Count;
             regionManager.Regions.CollectionChanged += _callback;
         }
+
         //create the callback and remove from the subscription
         private static NotifyCollectionChangedEventHandler GenerateCallbackWithScopeToThis(IRegionManager regionManager, Dictionary<string, string> regionViewDictionary)
         {
@@ -63,7 +57,6 @@ namespace AnnotationTool.Utils
                 {
                     regionManager.Regions.CollectionChanged -= _callback;
                 }
-
             };
         }
     }
@@ -100,7 +93,7 @@ namespace AnnotationTool.Utils
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    source.Save(ms,ImageFormat.Bmp);
+                    source.Save(ms, ImageFormat.Bmp);
                     BitmapImage image = new BitmapImage();
                     image.BeginInit();
                     image.StreamSource = ms;

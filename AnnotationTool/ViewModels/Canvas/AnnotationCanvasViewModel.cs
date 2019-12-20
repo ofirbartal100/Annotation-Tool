@@ -1,13 +1,9 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media.Imaging;
-using AnnotationTool.Utils;
+﻿using AnnotationTool.Utils;
 using AnnotationTool.ViewModels.Video;
 using Emgu.CV;
 using Prism.Events;
+using Prism.Mvvm;
+using System.Windows.Media.Imaging;
 
 namespace AnnotationTool.ViewModels.Canvas
 {
@@ -22,7 +18,6 @@ namespace AnnotationTool.ViewModels.Canvas
             get { return _frameBitmapSource; }
             set { SetProperty(ref _frameBitmapSource, value); }
         }
-
 
         public AnnotationCanvasViewModel(IEventAggregator eventAggregator)
         {
@@ -39,6 +34,5 @@ namespace AnnotationTool.ViewModels.Canvas
                 FrameBitmapSource.Freeze();
             }
         }
-
     }
 }

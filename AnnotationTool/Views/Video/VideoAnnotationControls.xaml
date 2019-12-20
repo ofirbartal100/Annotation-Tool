@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="AnnotationTool.Views.Video.VideoAnnotationControls"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <StackPanel Background="Azure">
-        
+
         <Label FontSize="20">Video Annotation Controls</Label>
-        
-        <!--Select Video--> 
+
+        <!--Select Video-->
         <DockPanel FlowDirection="RightToLeft">
             <Button Command="{Binding SelectVideoButtonClickCommand}">Browse</Button>
             <DockPanel FlowDirection="LeftToRight">
@@ -15,8 +15,7 @@
                 <TextBox Text="{Binding SelectedVideoTextBoxText}"></TextBox>
             </DockPanel>
         </DockPanel>
-        
-        <Button Command="{Binding LoadVideoToCanvasButtonClickCommand}">Load To Canvas</Button>
 
+        <Button Command="{Binding LoadVideoToCanvasButtonClickCommand}">Load To Canvas</Button>
     </StackPanel>
 </UserControl>

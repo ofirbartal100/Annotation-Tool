@@ -1,11 +1,10 @@
-﻿using System;
-using AnnotationTool.Views;
-using Prism.Ioc;
-using Prism.Modularity;
-using System.Windows;
+﻿using AnnotationTool.Views;
 using AnnotationTool.Views.Canvas;
 using AnnotationTool.Views.Image;
 using AnnotationTool.Views.Video;
+using Prism.Ioc;
+using System;
+using System.Windows;
 
 namespace AnnotationTool
 {
@@ -15,8 +14,7 @@ namespace AnnotationTool
     public partial class App
     {
         protected override Window CreateShell()
-        { 
-            
+        {
             return Container.Resolve<MainWindow>();
         }
 
@@ -31,7 +29,6 @@ namespace AnnotationTool
             containerRegistry.Register(typeof(Object), typeof(ImagesAnnotationStudio), "ImagesAnnotationStudio");
             containerRegistry.Register(typeof(Object), typeof(ImagesAnnotationControls), "ImagesAnnotationControls");
             containerRegistry.Register(typeof(Object), typeof(ImagesControls), "ImagesControls");
-
 
             containerRegistry.Register(typeof(Object), typeof(AnnotationCanvas), "AnnotationCanvas");
             containerRegistry.Register(typeof(Object), typeof(SourceSelection), "SourceSelection");

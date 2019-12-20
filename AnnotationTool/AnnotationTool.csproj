@@ -174,6 +174,9 @@
     <PackageReference Include="EMGU.CV">
       <Version>4.1.1.3497</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading">
+      <Version>16.4.43</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>7.2.0.1422</Version>
     </PackageReference>

@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using AnnotationTool.ViewModels.Image;
+using System.Windows;
 using System.Windows.Controls;
-using AnnotationTool.ViewModels.Image;
 
 namespace AnnotationTool.Views.Image
 {
@@ -14,10 +14,9 @@ namespace AnnotationTool.Views.Image
             InitializeComponent();
         }
 
-
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
-            ((ImagesAnnotationControlsViewModel)DataContext).ToggleButton_OnChecked(sender,e);
+            ((ImagesAnnotationControlsViewModel)DataContext).ToggleButton_OnChecked(sender, e);
         }
     }
 }

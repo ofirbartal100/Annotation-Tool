@@ -1,23 +1,23 @@
-﻿using Prism.Commands;
+﻿using AnnotationTool.Utils;
+using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AnnotationTool.Utils;
-using Prism.Events;
-using Prism.Regions;
 
 namespace AnnotationTool.ViewModels.Video
 {
     public class LoadFrameEvent : PubSubEvent<AnnotatedFrame>
     {
     }
+
     public class CurrentFrameNumberEvent : PubSubEvent<int>
     {
     }
+
     public class TotalFrameNumberEvent : PubSubEvent<int>
     {
     }
@@ -26,6 +26,7 @@ namespace AnnotationTool.ViewModels.Video
     {
         private IEventAggregator _eventAggregator;
         private AnnotatedVideo _video;
+
         public VideoAnnotationCanvasViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             Dictionary<string, string> navigation = new Dictionary<string, string>();
@@ -38,7 +39,6 @@ namespace AnnotationTool.ViewModels.Video
             _eventAggregator.GetEvent<VideoControlEvent>().Subscribe(VideoControlEventHandler);
             _eventAggregator.GetEvent<SliderMouseUpEvent>().Subscribe(SliderMouseUpEventHandler);
             _eventAggregator.GetEvent<SliderMouseDownEvent>().Subscribe(SliderMouseDownEventHandler);
-
         }
 
         #region Private Functions
@@ -74,7 +74,6 @@ namespace AnnotationTool.ViewModels.Video
                     {
                         _eventAggregator.GetEvent<LoadFrameEvent>().Publish(frame);
                         _eventAggregator.GetEvent<CurrentFrameNumberEvent>().Publish(currentFramePos);
-
                     }
                     var el = s.Elapsed;
                     Thread.Sleep(Math.Max((interval - (int)el.TotalMilliseconds), 0));
@@ -87,7 +86,6 @@ namespace AnnotationTool.ViewModels.Video
                     StopVideo();
                 }
             });
-
         }
 
         private void PauseVideo()
@@ -104,21 +102,22 @@ namespace AnnotationTool.ViewModels.Video
             _video.Close();
             _eventAggregator.GetEvent<LoadFrameEvent>().Publish(new AnnotatedFrame());
             _eventAggregator.GetEvent<CurrentFrameNumberEvent>().Publish(0);
-
         }
 
+        #endregion Private Functions
 
-        #endregion
         #region Event Handlers
 
         private void SliderMouseUpEventHandler(int frame)
         {
             _video.SetPosFrames(frame);
         }
+
         private void SliderMouseDownEventHandler()
         {
             PauseVideo();
         }
+
         private void LoadVideoEventHandler(string path)
         {
             _video = new AnnotatedVideo(path);
@@ -149,6 +148,7 @@ namespace AnnotationTool.ViewModels.Video
                     break;
             }
         }
-        #endregion
+
+        #endregion Event Handlers
     }
 }

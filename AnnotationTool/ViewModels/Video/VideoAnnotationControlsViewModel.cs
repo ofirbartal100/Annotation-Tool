@@ -1,18 +1,17 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Mvvm;
+using System.Windows.Input;
 
 namespace AnnotationTool.ViewModels.Video
 {
     public class LoadVideoEvent : PubSubEvent<string> { }
+
     public class VideoAnnotationControlsViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
+
         #region Properties
 
         private string _selectedVideoTextBoxText;
@@ -23,9 +22,11 @@ namespace AnnotationTool.ViewModels.Video
             set { SetProperty(ref _selectedVideoTextBoxText, value); }
         }
 
-        #endregion
+        #endregion Properties
+
         public ICommand SelectVideoButtonClickCommand { get; set; }
         public ICommand LoadVideoToCanvasButtonClickCommand { get; set; }
+
         public VideoAnnotationControlsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
@@ -49,7 +50,6 @@ namespace AnnotationTool.ViewModels.Video
             _eventAggregator.GetEvent<LoadVideoEvent>().Publish(SelectedVideoTextBoxText);
         }
 
-        #endregion
-
+        #endregion Commands
     }
 }
